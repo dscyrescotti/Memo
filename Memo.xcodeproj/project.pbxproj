@@ -11,6 +11,12 @@
 		EC698BEA29B0807900BC192F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EC698BE929B0807900BC192F /* Assets.xcassets */; };
 		EC698BED29B0807900BC192F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EC698BEC29B0807900BC192F /* Preview Assets.xcassets */; };
 		EC698BF829B0814300BC192F /* RecordingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC698BF729B0814300BC192F /* RecordingsView.swift */; };
+		EC698BFA29B0858A00BC192F /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC698BF929B0858A00BC192F /* Launch Screen.storyboard */; };
+		EC698BFD29B086F200BC192F /* RecorderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC698BFC29B086F200BC192F /* RecorderView.swift */; };
+		EC698BFF29B08D2B00BC192F /* RecorderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC698BFE29B08D2B00BC192F /* RecorderViewModel.swift */; };
+		EC698C0229B08EEF00BC192F /* View++.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC698C0129B08EEF00BC192F /* View++.swift */; };
+		EC698C0529B09ED000BC192F /* RecordingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC698C0429B09ED000BC192F /* RecordingError.swift */; };
+		EC698C0829B0A67600BC192F /* RecordingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC698C0729B0A67600BC192F /* RecordingState.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +25,12 @@
 		EC698BE929B0807900BC192F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EC698BEC29B0807900BC192F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		EC698BF729B0814300BC192F /* RecordingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingsView.swift; sourceTree = "<group>"; };
+		EC698BF929B0858A00BC192F /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		EC698BFC29B086F200BC192F /* RecorderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecorderView.swift; sourceTree = "<group>"; };
+		EC698BFE29B08D2B00BC192F /* RecorderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecorderViewModel.swift; sourceTree = "<group>"; };
+		EC698C0129B08EEF00BC192F /* View++.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View++.swift"; sourceTree = "<group>"; };
+		EC698C0429B09ED000BC192F /* RecordingError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingError.swift; sourceTree = "<group>"; };
+		EC698C0729B0A67600BC192F /* RecordingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingState.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +63,9 @@
 		EC698BE429B0807700BC192F /* Memo */ = {
 			isa = PBXGroup;
 			children = (
+				EC698C0629B0A66900BC192F /* Utility */,
+				EC698C0329B09EBC00BC192F /* Errors */,
+				EC698C0029B08EE600BC192F /* Extensions */,
 				EC698BF529B080D300BC192F /* Features */,
 				EC698BF429B080C400BC192F /* Resources */,
 				EC698BF329B0808A00BC192F /* App */,
@@ -79,6 +94,7 @@
 			isa = PBXGroup;
 			children = (
 				EC698BE929B0807900BC192F /* Assets.xcassets */,
+				EC698BF929B0858A00BC192F /* Launch Screen.storyboard */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -86,6 +102,7 @@
 		EC698BF529B080D300BC192F /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				EC698BFB29B086DC00BC192F /* Recorder */,
 				EC698BF629B0812800BC192F /* Recordings */,
 			);
 			path = Features;
@@ -97,6 +114,39 @@
 				EC698BF729B0814300BC192F /* RecordingsView.swift */,
 			);
 			path = Recordings;
+			sourceTree = "<group>";
+		};
+		EC698BFB29B086DC00BC192F /* Recorder */ = {
+			isa = PBXGroup;
+			children = (
+				EC698BFC29B086F200BC192F /* RecorderView.swift */,
+				EC698BFE29B08D2B00BC192F /* RecorderViewModel.swift */,
+			);
+			path = Recorder;
+			sourceTree = "<group>";
+		};
+		EC698C0029B08EE600BC192F /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				EC698C0129B08EEF00BC192F /* View++.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		EC698C0329B09EBC00BC192F /* Errors */ = {
+			isa = PBXGroup;
+			children = (
+				EC698C0429B09ED000BC192F /* RecordingError.swift */,
+			);
+			path = Errors;
+			sourceTree = "<group>";
+		};
+		EC698C0629B0A66900BC192F /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				EC698C0729B0A67600BC192F /* RecordingState.swift */,
+			);
+			path = Utility;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -157,6 +207,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EC698BFA29B0858A00BC192F /* Launch Screen.storyboard in Resources */,
 				EC698BED29B0807900BC192F /* Preview Assets.xcassets in Resources */,
 				EC698BEA29B0807900BC192F /* Assets.xcassets in Resources */,
 			);
@@ -169,8 +220,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EC698BFD29B086F200BC192F /* RecorderView.swift in Sources */,
 				EC698BE629B0807700BC192F /* MemoApp.swift in Sources */,
+				EC698C0529B09ED000BC192F /* RecordingError.swift in Sources */,
+				EC698C0229B08EEF00BC192F /* View++.swift in Sources */,
 				EC698BF829B0814300BC192F /* RecordingsView.swift in Sources */,
+				EC698C0829B0A67600BC192F /* RecordingState.swift in Sources */,
+				EC698BFF29B08D2B00BC192F /* RecorderViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -302,9 +358,11 @@
 				DEVELOPMENT_TEAM = 9TYSSFKV5U;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Memo wants the access to microphone to record.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -332,9 +390,11 @@
 				DEVELOPMENT_TEAM = 9TYSSFKV5U;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Memo wants the access to microphone to record.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
