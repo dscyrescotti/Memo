@@ -6,9 +6,10 @@
 //
 
 import SwiftUI
+import DSWaveformImage
+import DSWaveformImageViews
 
 struct RecorderView: View {
-
     @Environment(\.scenePhase) var scenePhase
     @Namespace var buttonBaseNamespace
     @Namespace var buttonBorderNamespace
@@ -16,13 +17,12 @@ struct RecorderView: View {
     @StateObject var viewModel = RecorderViewModel()
 
     var body: some View {
-        VStack {
-            Text("File Name")
-            Text("00:00.00")
-            Spacer()
-            // waveform view
-            Spacer()
-            recordToolBar
+        NavigationStack {
+            VStack {
+                waveFormView
+                recordToolBar
+            }
+            .navigationTitle("🎙Memo")
         }
         .errorAlert($viewModel.error) { error, completion in
             switch error {
@@ -52,14 +52,44 @@ struct RecorderView: View {
         .onChange(of: scenePhase) { newValue in
             viewModel.onChangeScenePhase(newValue)
         }
+        .onReceive(viewModel.timer) { _ in
+            viewModel.onUpdateAveragePower()
+        }
     }
 
+    @ViewBuilder
+    var waveFormView: some View {
+        if viewModel.state == .idle {
+            Text("Tap a red circle to start recording 👇")
+                .font(.headline)
+                .lineLimit(.none)
+                .multilineTextAlignment(.center)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .padding(20)
+        } else {
+            WaveformLiveCanvas(
+                samples: viewModel.samples,
+                configuration: Waveform.Configuration(
+                    style: .striped(.init(color: .blue, width: 2, spacing: 2)),
+                    verticalScalingFactor: 0.95
+                ),
+                renderer: LinearWaveformRenderer(),
+                shouldDrawSilencePadding: false
+            )
+            .frame(height: 100)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+        }
+    }
+}
+
+// MARK: - Toolbar
+extension RecorderView {
     var recordToolBar: some View {
         HStack {
             Spacer()
             if viewModel.state == .paused {
                 Button {
-
+                    viewModel.onTapDeleteRecording()
                 } label: {
                     Image(systemName: "trash.fill")
                         .resizable()
@@ -79,7 +109,7 @@ struct RecorderView: View {
             Spacer()
             if viewModel.state == .paused {
                 Button {
-
+                    viewModel.onTapStopRecording()
                 } label: {
                     Image(systemName: "stop.fill")
                         .resizable()
@@ -150,4 +180,3 @@ struct RecorderView: View {
         }
     }
 }
-

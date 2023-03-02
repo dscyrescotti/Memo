@@ -5,6 +5,7 @@
 //  Created by Aye Chan on 3/2/23.
 //
 
+import Combine
 import SwiftUI
 import Foundation
 import AVFoundation
@@ -15,38 +16,14 @@ class RecorderViewModel: ObservableObject {
 
     @Published var error: RecordingError?
     @Published var state: RecordingState = .idle
+    @Published var samples: [Float] = []
 
     var didMoveToBackground: Bool = false
 
+    var cancellable: (any Cancellable)?
+    var timer = Timer.publish(every: 0.005, on: .main, in: .common)
+
     init() { }
-
-    func onLoadAudioSession() async {
-        do {
-            /// set up audio session
-            try audioSession.setCategory(.playAndRecord)
-
-            /// prepare file path
-            let directory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-            let filePath = directory.appendingPathComponent("recording.m4a", conformingTo: .audio)
-
-            /// set up audio player
-            let settings: [String: Any] = [
-                AVSampleRateKey: 44100.0,
-                AVNumberOfChannelsKey: 2,
-                AVEncoderAudioQualityKey: AVAudioQuality.medium,
-                AVEncoderBitRateKey: 16
-            ]
-            audioRecorder = try AVAudioRecorder(url: filePath, settings: settings)
-        } catch  {
-            await MainActor.run {
-                if let error = error as? LocalizedError {
-                    self.error = .systemFailed(error)
-                } else {
-                    self.error = .unknown
-                }
-            }
-        }
-    }
 
     func onCheckPermission() async {
         switch audioSession.recordPermission {
@@ -58,7 +35,7 @@ class RecorderViewModel: ObservableObject {
             }
             await onCheckPermission()
         case .granted:
-            await onLoadAudioSession()
+            break
         default:
             await MainActor.run {
                 self.error = .permissionDenied
@@ -82,15 +59,136 @@ class RecorderViewModel: ObservableObject {
     }
 
     func onTapRecordButton() {
-        withAnimation {
-            switch state {
-            case .idle:
-                state = .recording
-            case .recording:
-                state = .paused
-            case .paused:
-                state = .recording
+        switch state {
+        case .idle:
+            onStartRecording()
+        case .recording:
+            onPauseRecording()
+        case .paused:
+            onResumeRecording()
+        }
+    }
+
+    func onTapDeleteRecording() {
+        Task {
+            onStopTimer()
+            let filePath = audioRecorder?.url
+            audioRecorder?.stop()
+            audioRecorder = nil
+            await MainActor.run {
+                withAnimation {
+                    state = .idle
+                }
+            }
+            guard let filePath, FileManager.default.fileExists(atPath: filePath.relativePath) else { return }
+            do {
+                try FileManager.default.removeItem(at: filePath)
+            } catch {
+                await onHandleError(error)
             }
         }
+    }
+
+    func onTapStopRecording() {
+        Task {
+            onStopTimer()
+            audioRecorder?.stop()
+            audioRecorder = nil
+            await MainActor.run {
+                withAnimation {
+                    samples = []
+                    state = .idle
+                }
+            }
+        }
+    }
+
+    private func onStartRecording() {
+        Task {
+            do {
+                /// set up audio session
+                try audioSession.setCategory(.playAndRecord)
+
+                /// prepare file path
+                let directory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+                let formattedDate = Date().formatted(date: .long, time: .standard)
+                let filePath = directory.appendingPathComponent("\(formattedDate).m4a")
+
+                /// set up audio player
+                let settings: [String: Any] = [
+                    AVFormatIDKey: kAudioFormatMPEG4AAC,
+                    AVSampleRateKey: 44100.0,
+                    AVNumberOfChannelsKey: 1
+                ]
+                audioRecorder = try AVAudioRecorder(url: filePath, settings: settings)
+                audioRecorder?.isMeteringEnabled = true
+                audioRecorder?.prepareToRecord()
+                audioRecorder?.record()
+
+                onStartTimer()
+
+                await MainActor.run {
+                    withAnimation {
+                        state = .recording
+                    }
+                }
+            } catch  {
+                await onHandleError(error)
+            }
+        }
+    }
+
+    private func onPauseRecording() {
+        Task {
+            onStopTimer()
+            audioRecorder?.pause()
+            await MainActor.run {
+                withAnimation {
+                    state = .paused
+                }
+            }
+        }
+    }
+
+    private func onResumeRecording() {
+        Task {
+            onStartTimer()
+            audioRecorder?.prepareToRecord()
+            audioRecorder?.record()
+            await MainActor.run {
+                withAnimation {
+                    state = .recording
+                }
+            }
+        }
+    }
+
+    private func onHandleError(_ error: Error) async {
+        await MainActor.run {
+            if let error = error as? LocalizedError {
+                self.error = .systemFailed(error)
+            } else {
+                self.error = .unknown
+            }
+        }
+    }
+
+    private func onStartTimer() {
+        guard cancellable == nil else { return }
+        timer = Timer.publish(every: 0.005, on: .main, in: .common)
+        cancellable = timer.connect()
+    }
+
+    private func onStopTimer() {
+        guard cancellable != nil else { return }
+        cancellable?.cancel()
+        cancellable = nil
+    }
+
+    func onUpdateAveragePower() {
+        guard let audioRecorder else { return }
+        audioRecorder.updateMeters()
+        let currentAmplitude = 1 - pow(10, audioRecorder.averagePower(forChannel: 0) / 20)
+        samples += [currentAmplitude]
     }
 }

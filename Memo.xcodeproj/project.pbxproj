@@ -17,6 +17,9 @@
 		EC698C0229B08EEF00BC192F /* View++.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC698C0129B08EEF00BC192F /* View++.swift */; };
 		EC698C0529B09ED000BC192F /* RecordingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC698C0429B09ED000BC192F /* RecordingError.swift */; };
 		EC698C0829B0A67600BC192F /* RecordingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC698C0729B0A67600BC192F /* RecordingState.swift */; };
+		EC698C0E29B0E79200BC192F /* DSWaveformImageViews in Frameworks */ = {isa = PBXBuildFile; productRef = EC698C0D29B0E79200BC192F /* DSWaveformImageViews */; };
+		EC698C1129B0E88100BC192F /* DSWaveformImage in Frameworks */ = {isa = PBXBuildFile; productRef = EC698C1029B0E88100BC192F /* DSWaveformImage */; };
+		EC698C1729B0F6D900BC192F /* AsyncAlgorithms in Frameworks */ = {isa = PBXBuildFile; productRef = EC698C1629B0F6D900BC192F /* AsyncAlgorithms */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +41,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EC698C1129B0E88100BC192F /* DSWaveformImage in Frameworks */,
+				EC698C0E29B0E79200BC192F /* DSWaveformImageViews in Frameworks */,
+				EC698C1729B0F6D900BC192F /* AsyncAlgorithms in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -49,6 +55,7 @@
 			children = (
 				EC698BE429B0807700BC192F /* Memo */,
 				EC698BE329B0807700BC192F /* Products */,
+				EC698C0F29B0E88100BC192F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -149,6 +156,13 @@
 			path = Utility;
 			sourceTree = "<group>";
 		};
+		EC698C0F29B0E88100BC192F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -165,6 +179,11 @@
 			dependencies = (
 			);
 			name = Memo;
+			packageProductDependencies = (
+				EC698C0D29B0E79200BC192F /* DSWaveformImageViews */,
+				EC698C1029B0E88100BC192F /* DSWaveformImage */,
+				EC698C1629B0F6D900BC192F /* AsyncAlgorithms */,
+			);
 			productName = Memo;
 			productReference = EC698BE229B0807700BC192F /* Memo.app */;
 			productType = "com.apple.product-type.application";
@@ -193,6 +212,10 @@
 				Base,
 			);
 			mainGroup = EC698BD929B0807700BC192F;
+			packageReferences = (
+				EC698C0C29B0E79200BC192F /* XCRemoteSwiftPackageReference "DSWaveformImage" */,
+				EC698C1529B0F6D900BC192F /* XCRemoteSwiftPackageReference "swift-async-algorithms" */,
+			);
 			productRefGroup = EC698BE329B0807700BC192F /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -433,6 +456,43 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		EC698C0C29B0E79200BC192F /* XCRemoteSwiftPackageReference "DSWaveformImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/dmrschmidt/DSWaveformImage";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.0.0;
+			};
+		};
+		EC698C1529B0F6D900BC192F /* XCRemoteSwiftPackageReference "swift-async-algorithms" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-async-algorithms.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		EC698C0D29B0E79200BC192F /* DSWaveformImageViews */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EC698C0C29B0E79200BC192F /* XCRemoteSwiftPackageReference "DSWaveformImage" */;
+			productName = DSWaveformImageViews;
+		};
+		EC698C1029B0E88100BC192F /* DSWaveformImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EC698C0C29B0E79200BC192F /* XCRemoteSwiftPackageReference "DSWaveformImage" */;
+			productName = DSWaveformImage;
+		};
+		EC698C1629B0F6D900BC192F /* AsyncAlgorithms */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EC698C1529B0F6D900BC192F /* XCRemoteSwiftPackageReference "swift-async-algorithms" */;
+			productName = AsyncAlgorithms;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = EC698BDA29B0807700BC192F /* Project object */;
 }
