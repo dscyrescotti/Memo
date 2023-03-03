@@ -17,6 +17,7 @@ class RecorderViewModel: ObservableObject {
     @Published var error: RecordingError?
     @Published var state: RecordingState = .idle
     @Published var samples: [Float] = []
+    @Published var currentTime: TimeInterval = 0
 
     var didMoveToBackground: Bool = false
 
@@ -190,5 +191,6 @@ class RecorderViewModel: ObservableObject {
         audioRecorder.updateMeters()
         let currentAmplitude = 1 - pow(10, audioRecorder.averagePower(forChannel: 0) / 20)
         samples += [currentAmplitude]
+        currentTime = audioRecorder.currentTime
     }
 }

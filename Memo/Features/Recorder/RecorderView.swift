@@ -23,6 +23,16 @@ struct RecorderView: View {
                 recordToolBar
             }
             .navigationTitle("🎙Memo")
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    NavigationLink {
+                        RecordingsView()
+                    } label: {
+                        Image(systemName: "list.bullet")
+                    }
+                    .foregroundColor(.red)
+                }
+            }
         }
         .errorAlert($viewModel.error) { error, completion in
             switch error {
@@ -67,17 +77,55 @@ struct RecorderView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .padding(20)
         } else {
-            WaveformLiveCanvas(
-                samples: viewModel.samples,
-                configuration: Waveform.Configuration(
-                    style: .striped(.init(color: .blue, width: 2, spacing: 2)),
-                    verticalScalingFactor: 0.95
-                ),
-                renderer: LinearWaveformRenderer(),
-                shouldDrawSilencePadding: false
-            )
-            .frame(height: 100)
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            GeometryReader { proxy in
+                VStack {
+                    WaveformLiveCanvas(
+                        samples: viewModel.samples,
+                        configuration: Waveform.Configuration(
+                            style: .striped(.init(color: .red, width: 2, spacing: 2)),
+                            verticalScalingFactor: 1
+                        ),
+                        renderer: LinearWaveformRenderer(),
+                        shouldDrawSilencePadding: false
+                    )
+                    .frame(height: 300)
+                    HStack(alignment: .lastTextBaseline, spacing: 2) {
+                        Spacer()
+                        let showsHour = viewModel.currentTime.hour > 0
+                        if showsHour {
+                            timeBox(for: viewModel.currentTime.hour)
+                        }
+                        timeBox(for: viewModel.currentTime.minute, appending: showsHour ? ":" : "")
+                        timeBox(for: viewModel.currentTime.second, appending: ":")
+                        timeBox(for: viewModel.currentTime.decimals, appending: ".", width: 15)
+                            .font(.title3.bold())
+                        Spacer()
+                    }
+                    .font(.largeTitle.bold())
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            }
+        }
+    }
+}
+
+// MARK: - Timeline
+extension RecorderView {
+    func timeBox(for value: Int, appending text: String? = nil, width: CGFloat = 22) -> some View {
+        HStack(spacing: 2) {
+            let digits = value.digits()
+            Group {
+                if let text {
+                    Text(text)
+                }
+                if digits.count == 1 {
+                    Text("0")
+                }
+                ForEach(0..<digits.count, id: \.self) { index in
+                    Text("\(digits[index])")
+                }
+            }
+            .frame(width: width)
         }
     }
 }
