@@ -21,6 +21,11 @@
 		EC698C0829B0A67600BC192F /* RecordingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC698C0729B0A67600BC192F /* RecordingState.swift */; };
 		EC698C0E29B0E79200BC192F /* DSWaveformImageViews in Frameworks */ = {isa = PBXBuildFile; productRef = EC698C0D29B0E79200BC192F /* DSWaveformImageViews */; };
 		EC698C1129B0E88100BC192F /* DSWaveformImage in Frameworks */ = {isa = PBXBuildFile; productRef = EC698C1029B0E88100BC192F /* DSWaveformImage */; };
+		EC6C4B9C29B38A9600BB804A /* RecordingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC6C4B9B29B38A9600BB804A /* RecordingsViewModel.swift */; };
+		EC6C4B9E29B38D7A00BB804A /* AudioPlayerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC6C4B9D29B38D7A00BB804A /* AudioPlayerError.swift */; };
+		EC6C4BA029B391E200BB804A /* AudioItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC6C4B9F29B391E200BB804A /* AudioItem.swift */; };
+		EC6C4BA229B3A01900BB804A /* AudioItemRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC6C4BA129B3A01900BB804A /* AudioItemRow.swift */; };
+		EC6C4BA429B3A7E800BB804A /* Date++.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC6C4BA329B3A7E800BB804A /* Date++.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +42,11 @@
 		EC698C0129B08EEF00BC192F /* View++.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View++.swift"; sourceTree = "<group>"; };
 		EC698C0429B09ED000BC192F /* RecordingError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingError.swift; sourceTree = "<group>"; };
 		EC698C0729B0A67600BC192F /* RecordingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingState.swift; sourceTree = "<group>"; };
+		EC6C4B9B29B38A9600BB804A /* RecordingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingsViewModel.swift; sourceTree = "<group>"; };
+		EC6C4B9D29B38D7A00BB804A /* AudioPlayerError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerError.swift; sourceTree = "<group>"; };
+		EC6C4B9F29B391E200BB804A /* AudioItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioItem.swift; sourceTree = "<group>"; };
+		EC6C4BA129B3A01900BB804A /* AudioItemRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioItemRow.swift; sourceTree = "<group>"; };
+		EC6C4BA329B3A7E800BB804A /* Date++.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date++.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +131,8 @@
 			isa = PBXGroup;
 			children = (
 				EC698BF729B0814300BC192F /* RecordingsView.swift */,
+				EC6C4B9B29B38A9600BB804A /* RecordingsViewModel.swift */,
+				EC6C4BA129B3A01900BB804A /* AudioItemRow.swift */,
 			);
 			path = Recordings;
 			sourceTree = "<group>";
@@ -140,6 +152,7 @@
 				EC698C0129B08EEF00BC192F /* View++.swift */,
 				EC1CC29629B250090033C611 /* Double++.swift */,
 				EC1CC29829B25BC60033C611 /* Int++.swift */,
+				EC6C4BA329B3A7E800BB804A /* Date++.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -148,6 +161,7 @@
 			isa = PBXGroup;
 			children = (
 				EC698C0429B09ED000BC192F /* RecordingError.swift */,
+				EC6C4B9D29B38D7A00BB804A /* AudioPlayerError.swift */,
 			);
 			path = Errors;
 			sourceTree = "<group>";
@@ -156,6 +170,7 @@
 			isa = PBXGroup;
 			children = (
 				EC698C0729B0A67600BC192F /* RecordingState.swift */,
+				EC6C4B9F29B391E200BB804A /* AudioItem.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -248,10 +263,15 @@
 				EC698BFD29B086F200BC192F /* RecorderView.swift in Sources */,
 				EC1CC29729B250090033C611 /* Double++.swift in Sources */,
 				EC698BE629B0807700BC192F /* MemoApp.swift in Sources */,
+				EC6C4BA029B391E200BB804A /* AudioItem.swift in Sources */,
+				EC6C4B9E29B38D7A00BB804A /* AudioPlayerError.swift in Sources */,
 				EC698C0529B09ED000BC192F /* RecordingError.swift in Sources */,
+				EC6C4B9C29B38A9600BB804A /* RecordingsViewModel.swift in Sources */,
 				EC1CC29929B25BC60033C611 /* Int++.swift in Sources */,
 				EC698C0229B08EEF00BC192F /* View++.swift in Sources */,
 				EC698BF829B0814300BC192F /* RecordingsView.swift in Sources */,
+				EC6C4BA229B3A01900BB804A /* AudioItemRow.swift in Sources */,
+				EC6C4BA429B3A7E800BB804A /* Date++.swift in Sources */,
 				EC698C0829B0A67600BC192F /* RecordingState.swift in Sources */,
 				EC698BFF29B08D2B00BC192F /* RecorderViewModel.swift in Sources */,
 			);

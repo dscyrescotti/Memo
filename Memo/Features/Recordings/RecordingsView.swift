@@ -8,13 +8,22 @@
 import SwiftUI
 
 struct RecordingsView: View {
+    @StateObject var viewModel = RecordingsViewModel()
     var body: some View {
-        NavigationStack {
-            ScrollView {
-                Text("Hello Recodings")
+        List(viewModel.audioItems) { item in
+            AudioItemRow(item: item)
+        }
+        .listStyle(.plain)
+        .navigationTitle("Audios")
+        .navigationBarTitleDisplayMode(.inline)
+        .errorAlert($viewModel.error) { error, completion in
+            Button("Cancel", role: .cancel) {
+                completion()
             }
-            .navigationTitle("Memo")
-            .navigationBarTitleDisplayMode(.large)
+        }
+        .task {
+            await viewModel.onLoadAudios()
         }
     }
 }
+

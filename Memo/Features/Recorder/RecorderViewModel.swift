@@ -112,8 +112,13 @@ class RecorderViewModel: ObservableObject {
 
                 /// prepare file path
                 let directory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-                let formattedDate = Date().formatted(date: .long, time: .standard)
-                let filePath = directory.appendingPathComponent("\(formattedDate).m4a")
+                var filePath = directory.appendingPathComponent("Memo.m4a")
+                var count: Int = 1
+                while FileManager.default.fileExists(atPath: filePath.relativePath) {
+                    let newFileName = "Memo-\(count).m4a"
+                    filePath.deleteLastPathComponent()
+                    filePath = filePath.appendingPathComponent(newFileName)
+                }
 
                 /// set up audio player
                 let settings: [String: Any] = [
