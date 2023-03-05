@@ -64,10 +64,12 @@ class RecordingsViewModel: NSObject, ObservableObject, AVAudioPlayerDelegate {
     func onPlayAudio() {
         guard let audioPlayer else { return }
         guard !audioPlayer.isPlaying else { return }
-        currentTime = audioPlayer.currentTime
-        audioState = .playing
-        audioPlayer.play()
-        onStartTimer()
+        if audioPlayer.duration > .zero {
+            currentTime = audioPlayer.currentTime
+            audioState = .playing
+            audioPlayer.play()
+            onStartTimer()
+        }
     }
 
     func onPauseAudio() {

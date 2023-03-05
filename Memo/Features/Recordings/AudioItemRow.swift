@@ -76,10 +76,10 @@ struct AudioItemRow: View {
                     }
                 }
                 HStack(spacing: 0.2) {
-                    durationView(for: viewModel.currentTime)
+                    durationView(for: min(viewModel.currentTime, item.duration))
                     Spacer()
                     Text("-")
-                    durationView(for: item.duration - viewModel.currentTime)
+                    durationView(for: max(item.duration - viewModel.currentTime, 0))
                 }
                 .font(.caption2)
             }
