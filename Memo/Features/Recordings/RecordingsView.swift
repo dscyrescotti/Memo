@@ -40,9 +40,6 @@ struct RecordingsView: View {
         .onReceive(viewModel.timer) { _ in
             viewModel.onUpdateTimeline()
         }
-        .toolbar {
-            EditButton()
-        }
     }
 }
 
