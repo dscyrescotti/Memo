@@ -9,6 +9,11 @@ import SwiftUI
 
 @main
 struct MemoApp: App {
+    init() {
+        let thumbImage = UIImage(named: "thumbImage")
+        UISlider.appearance().setThumbImage(thumbImage, for: .normal)
+    }
+
     var body: some Scene {
         WindowGroup {
             RecorderView()

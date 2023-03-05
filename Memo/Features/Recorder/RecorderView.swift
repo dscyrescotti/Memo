@@ -30,10 +30,10 @@ struct RecorderView: View {
                     } label: {
                         Image(systemName: "list.bullet")
                     }
-                    .foregroundColor(.red)
                 }
             }
         }
+        .tint(.red)
         .errorAlert($viewModel.error) { error, completion in
             switch error {
             case .permissionDenied:
