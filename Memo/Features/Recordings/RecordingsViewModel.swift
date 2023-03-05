@@ -128,4 +128,18 @@ class RecordingsViewModel: NSObject, ObservableObject, AVAudioPlayerDelegate {
         cancellable?.cancel()
         cancellable = nil
     }
+
+    func onDeleteAudio(of item: AudioItem) {
+        Task {
+            do {
+                guard let index = audioItems.firstIndex(of: item) else { return }
+                await MainActor.run {
+                    _ = audioItems.remove(at: index)
+                }
+                try FileManager.default.removeItem(atPath: item.filePath.relativePath)
+            } catch {
+                await onHandleError(error)
+            }
+        }
+    }
 }

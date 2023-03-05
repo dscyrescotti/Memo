@@ -14,14 +14,14 @@ struct AudioItemRow: View {
     var expandsRow: Bool
 
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 3) {
             Text(item.name)
                 .font(.headline.bold())
             HStack {
                 Text(item.createdAt.formatDate())
                 Spacer()
                 if !expandsRow {
-                    durationView
+                    durationView(for: item.duration)
                 }
             }
             .foregroundColor(.secondary)
@@ -29,6 +29,7 @@ struct AudioItemRow: View {
             if expandsRow {
                 audioPlayerTool
                     .transition(.opacity)
+                    .padding(.bottom, 5)
             }
         }
         .contentShape(Rectangle())
@@ -38,8 +39,7 @@ struct AudioItemRow: View {
     }
 
     @ViewBuilder
-    var durationView: some View {
-        let seconds = item.duration
+    func durationView(for seconds: Double) -> some View {
         let showsHour = seconds.hour > 0
         HStack(spacing: 0.2) {
             if showsHour {
@@ -68,12 +68,22 @@ struct AudioItemRow: View {
     }
 
     var audioPlayerTool: some View {
-        VStack {
-            Slider(value: $viewModel.currentTime, in: 0...item.duration) { isEditing in
-                if !isEditing {
-                    viewModel.onSlideTimeline()
+        VStack(spacing: 0) {
+            VStack(spacing: 0) {
+                Slider(value: $viewModel.currentTime, in: 0...item.duration) { isEditing in
+                    if !isEditing {
+                        viewModel.onSlideTimeline()
+                    }
                 }
+                HStack(spacing: 0.2) {
+                    durationView(for: viewModel.currentTime)
+                    Spacer()
+                    Text("-")
+                    durationView(for: item.duration - viewModel.currentTime)
+                }
+                .font(.caption2)
             }
+            .tint(.gray)
             HStack(spacing: 30) {
                 Spacer()
                 Button {
@@ -95,6 +105,7 @@ struct AudioItemRow: View {
                     }
                 }
                 .font(.largeTitle)
+                .frame(height: 30)
                 Button {
                     viewModel.onSkipForward()
                 } label: {

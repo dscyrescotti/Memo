@@ -16,6 +16,14 @@ struct RecordingsView: View {
                 expandsRow: viewModel.selectedAudioItem == item
             )
             .id(item.id)
+            .swipeActions(allowsFullSwipe: true) {
+                Button(role: .destructive) {
+                    viewModel.onDeleteAudio(of: item)
+                } label: {
+                    Image(systemName: "trash.fill")
+                }
+                .tint(.red)
+            }
         }
         .listStyle(.plain)
         .navigationTitle("Audios")
@@ -31,6 +39,9 @@ struct RecordingsView: View {
         .environmentObject(viewModel)
         .onReceive(viewModel.timer) { _ in
             viewModel.onUpdateTimeline()
+        }
+        .toolbar {
+            EditButton()
         }
     }
 }
