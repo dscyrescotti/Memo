@@ -9,19 +9,31 @@ import SwiftUI
 import AVFoundation
 
 struct AudioItemRow: View {
+    @EnvironmentObject var viewModel: RecordingsViewModel
     let item: AudioItem
+    var expandsRow: Bool
 
     var body: some View {
         VStack(alignment: .leading) {
             Text(item.name)
-                .font(.headline)
+                .font(.headline.bold())
             HStack {
                 Text(item.createdAt.formatDate())
                 Spacer()
-                durationView
+                if !expandsRow {
+                    durationView
+                }
             }
             .foregroundColor(.secondary)
             .font(.caption)
+            if expandsRow {
+                audioPlayerTool
+                    .transition(.opacity)
+            }
+        }
+        .contentShape(Rectangle())
+        .onTapGesture {
+            viewModel.onExpandAudioRow(with: item)
         }
     }
 
@@ -52,6 +64,48 @@ struct AudioItemRow: View {
                     Text("\(digits[index])")
                 }
             }
+        }
+    }
+
+    var audioPlayerTool: some View {
+        VStack {
+            Slider(value: $viewModel.currentTime, in: 0...item.duration) { isEditing in
+                if !isEditing {
+                    viewModel.onSlideTimeline()
+                }
+            }
+            HStack(spacing: 30) {
+                Spacer()
+                Button {
+                    viewModel.onSkipBackward()
+                } label: {
+                    Image(systemName: "gobackward.10")
+                }
+                Button {
+                    if viewModel.audioState == .playing {
+                        viewModel.onPauseAudio()
+                    } else {
+                        viewModel.onPlayAudio()
+                    }
+                } label: {
+                    if viewModel.audioState == .playing {
+                        Image(systemName: "pause.fill")
+                    } else {
+                        Image(systemName: "play.fill")
+                    }
+                }
+                .font(.largeTitle)
+                Button {
+                    viewModel.onSkipForward()
+                } label: {
+                    Image(systemName: "goforward.10")
+                }
+                Spacer()
+            }
+            .buttonStyle(BorderlessButtonStyle())
+            .font(.title2)
+            .fontWeight(.semibold)
+            .tint(.black)
         }
     }
 }

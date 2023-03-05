@@ -5,13 +5,25 @@
 //  Created by Aye Chan on 3/4/23.
 //
 
+import Combine
+import SwiftUI
 import Foundation
+import AVFoundation
 
-class RecordingsViewModel: ObservableObject {
+class RecordingsViewModel: NSObject, ObservableObject, AVAudioPlayerDelegate {
     @Published var audioItems: [AudioItem] = []
     @Published var error: RecordingError?
+    @Published var selectedAudioItem: AudioItem?
+    @Published var audioState: AudioState = .idle
+    @Published var currentTime: Double = .zero
 
-    init() { }
+    var audioPlayer: AVAudioPlayer?
+    var cancellable: (any Cancellable)?
+    var timer = Timer.publish(every: 0.01, on: .main, in: .common)
+
+    override init() {
+        super.init()
+    }
 
     func onLoadAudios() async {
         do {
@@ -30,6 +42,66 @@ class RecordingsViewModel: ObservableObject {
         }
     }
 
+    func onExpandAudioRow(with item: AudioItem) {
+        guard item != selectedAudioItem else { return }
+        if let audioPlayer {
+            audioPlayer.delegate = nil
+            if audioPlayer.isPlaying {
+                audioPlayer.stop()
+            }
+        }
+        onStopTimer()
+        currentTime = .zero
+        audioState = .idle
+        withAnimation {
+            selectedAudioItem = item
+        }
+        self.audioPlayer = selectedAudioItem?.audioPlayer
+        self.audioPlayer?.currentTime = currentTime
+        self.audioPlayer?.delegate = self
+    }
+
+    func onPlayAudio() {
+        guard let audioPlayer else { return }
+        guard !audioPlayer.isPlaying else { return }
+        currentTime = audioPlayer.currentTime
+        audioState = .playing
+        audioPlayer.play()
+        onStartTimer()
+    }
+
+    func onPauseAudio() {
+        guard let audioPlayer else { return }
+        guard audioPlayer.isPlaying else { return }
+        audioState = .paused
+        audioPlayer.pause()
+        onStopTimer()
+    }
+
+    func onSkipForward() {
+        guard let audioPlayer else { return }
+        let currentTime = min(audioPlayer.currentTime + 10, audioPlayer.duration)
+        audioPlayer.currentTime = currentTime
+        self.currentTime = currentTime
+
+    }
+
+    func onSkipBackward() {
+        guard let audioPlayer else { return }
+        let currentTime = max(audioPlayer.currentTime - 10, 0)
+        audioPlayer.currentTime = currentTime
+        self.currentTime = currentTime
+    }
+
+    func onSlideTimeline() {
+        guard let audioPlayer else { return }
+        audioPlayer.currentTime = currentTime
+    }
+
+    func onUpdateTimeline() {
+        currentTime += 0.01
+    }
+
     private func onHandleError(_ error: Error) async {
         await MainActor.run {
             if let error = error as? LocalizedError {
@@ -38,5 +110,22 @@ class RecordingsViewModel: ObservableObject {
                 self.error = .unknown
             }
         }
+    }
+
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        audioState = .idle
+        onStopTimer()
+    }
+
+    private func onStartTimer() {
+        guard cancellable == nil else { return }
+        timer = Timer.publish(every: 0.01, on: .main, in: .common)
+        cancellable = timer.connect()
+    }
+
+    private func onStopTimer() {
+        guard cancellable != nil else { return }
+        cancellable?.cancel()
+        cancellable = nil
     }
 }

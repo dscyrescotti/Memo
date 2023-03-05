@@ -11,7 +11,11 @@ struct RecordingsView: View {
     @StateObject var viewModel = RecordingsViewModel()
     var body: some View {
         List(viewModel.audioItems) { item in
-            AudioItemRow(item: item)
+            AudioItemRow(
+                item: item,
+                expandsRow: viewModel.selectedAudioItem == item
+            )
+            .id(item.id)
         }
         .listStyle(.plain)
         .navigationTitle("Audios")
@@ -23,6 +27,10 @@ struct RecordingsView: View {
         }
         .task {
             await viewModel.onLoadAudios()
+        }
+        .environmentObject(viewModel)
+        .onReceive(viewModel.timer) { _ in
+            viewModel.onUpdateTimeline()
         }
     }
 }

@@ -77,6 +77,7 @@ class RecorderViewModel: ObservableObject {
             audioRecorder?.stop()
             audioRecorder = nil
             await MainActor.run {
+                samples.removeAll()
                 withAnimation {
                     state = .idle
                 }
@@ -118,6 +119,7 @@ class RecorderViewModel: ObservableObject {
                     let newFileName = "Memo-\(count).m4a"
                     filePath.deleteLastPathComponent()
                     filePath = filePath.appendingPathComponent(newFileName)
+                    count += 1
                 }
 
                 /// set up audio player

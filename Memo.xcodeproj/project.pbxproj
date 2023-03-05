@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EC14BC6029B473C200626F8A /* AudioState.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC14BC5F29B473C200626F8A /* AudioState.swift */; };
 		EC1CC29729B250090033C611 /* Double++.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1CC29629B250090033C611 /* Double++.swift */; };
 		EC1CC29929B25BC60033C611 /* Int++.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1CC29829B25BC60033C611 /* Int++.swift */; };
 		EC698BE629B0807700BC192F /* MemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC698BE529B0807700BC192F /* MemoApp.swift */; };
@@ -29,6 +30,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		EC14BC5F29B473C200626F8A /* AudioState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioState.swift; sourceTree = "<group>"; };
 		EC1CC29629B250090033C611 /* Double++.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double++.swift"; sourceTree = "<group>"; };
 		EC1CC29829B25BC60033C611 /* Int++.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int++.swift"; sourceTree = "<group>"; };
 		EC698BE229B0807700BC192F /* Memo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Memo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -130,9 +132,9 @@
 		EC698BF629B0812800BC192F /* Recordings */ = {
 			isa = PBXGroup;
 			children = (
+				EC6C4BA129B3A01900BB804A /* AudioItemRow.swift */,
 				EC698BF729B0814300BC192F /* RecordingsView.swift */,
 				EC6C4B9B29B38A9600BB804A /* RecordingsViewModel.swift */,
-				EC6C4BA129B3A01900BB804A /* AudioItemRow.swift */,
 			);
 			path = Recordings;
 			sourceTree = "<group>";
@@ -171,6 +173,7 @@
 			children = (
 				EC698C0729B0A67600BC192F /* RecordingState.swift */,
 				EC6C4B9F29B391E200BB804A /* AudioItem.swift */,
+				EC14BC5F29B473C200626F8A /* AudioState.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -274,6 +277,7 @@
 				EC6C4BA429B3A7E800BB804A /* Date++.swift in Sources */,
 				EC698C0829B0A67600BC192F /* RecordingState.swift in Sources */,
 				EC698BFF29B08D2B00BC192F /* RecorderViewModel.swift in Sources */,
+				EC14BC6029B473C200626F8A /* AudioState.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
